@@ -18,17 +18,30 @@ export class AppComponent {
 
   public generatePDF() {
     const content = this.contentToConvert.nativeElement;
-    console.log('content:', content);
     html2canvas(content).then((canvas) => {
       const imgData = canvas.toDataURL('image/png');
       const pdf = new jsPDF();
+
       const imgWidth = 210;
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-      pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+      const logoUrl =
+        'https://images.freeimages.com/image/thumbs/a6e/dark-wolf-logo-triangle-png-art-5695593.png';
+      pdf.addImage(logoUrl, 'PNG', 10, 10, 40, 40);
+
+      pdf.setFontSize(12);
+      pdf.text('Cabeçalho do Documento', 60, 20);
+
+      pdf.addImage(imgData, 'PNG', 0, 60, imgWidth, imgHeight);
+
+      const pageHeight = pdf.internal.pageSize.height;
+      const footerText = 'Rodapé do Documento';
+      pdf.text(footerText, 10, pageHeight - 10);
+
       pdf.save('documento.pdf');
     });
   }
+
   // public dadosPessoa = [
   //   {
   //     pessoa: [
