@@ -1,4 +1,53 @@
-<button mat-raised-button color="primary" (click)="gerarPdf()">
-  Gerar PDF
-</button>
+<div #contentToConvert>
+  <div class="document">
+    <div class="header">
+      <img
+        src="https://images.freeimages.com/image/thumbs/a6e/dark-wolf-logo-triangle-png-art-5695593.png"
+        alt="Logo do Governo"
+      />
+      <h1>Governo do Estado</h1>
+      <h2>Secretaria de Serviços Públicos</h2>
+    </div>
 
+    <h3>Formulário de Solicitação</h3>
+
+    <mat-list>
+      <mat-list-item>
+        <span class="item-label">Nome Completo:</span>
+        <span class="item-value">João da Silva</span>
+      </mat-list-item>
+      <mat-list-item>
+        <span class="item-label">CPF:</span>
+        <span class="item-value">123.456.789-00</span>
+      </mat-list-item>
+      <mat-list-item>
+        <span class="item-label">Endereço:</span>
+        <span class="item-value">Rua Exemplo, 123 - Centro, Cidade - Estado</span>
+      </mat-list-item>
+      <mat-list-item>
+        <span class="item-label">Telefone:</span>
+        <span class="item-value">(11) 98765-4321</span>
+      </mat-list-item>
+      <mat-list-item>
+        <span class="item-label">Tipo de Solicitação:</span>
+        <span class="item-value">Reparo de Iluminação Pública</span>
+      </mat-list-item>
+      <mat-list-item>
+        <span class="item-label">Descrição:</span>
+        <span class="item-value">
+          Poste de iluminação quebrado na esquina da Rua Exemplo com Rua Teste.
+        </span>
+      </mat-list-item>
+    </mat-list>
+
+    <div class="footer">
+      <p>
+        Este é um documento oficial do Governo do Estado. Qualquer dúvida, entre
+        em contato através do telefone (11) 1234-5678.
+      </p>
+      <p>&copy; 2023 Governo do Estado. Todos os direitos reservados.</p>
+    </div>
+  </div>
+</div>
+
+<button (click)="generatePDF()">Gerar PDF</button>
