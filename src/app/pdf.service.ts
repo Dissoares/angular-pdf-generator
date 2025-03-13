@@ -11,27 +11,59 @@ export class PdfService {
     dadosArray: any[],
     textoCabecalho: string,
     textoRodape: string,
-    logotipoUrl: string
+    logoUrl: string
   ) {
     const doc = new jsPDF();
 
-    doc.addImage(logotipoUrl, 'PNG', 10, 10, 30, 30);
+    doc.addImage(logoUrl, 'PNG', 10, 10, 30, 30);
     doc.setFontSize(18);
     doc.text(textoCabecalho, 50, 20);
 
-    autoTable(doc, {
-      startY: 40,
-      head: [['ID', 'Nome', 'Email']],
-      body: dadosArray.map((item) => [item.id, item.name, item.email]),
+    let startY = 40;
+
+    dadosArray.forEach((item) => {
+      autoTable(doc, {
+        startY,
+        head: [['ID', 'Nome', 'Email']],
+        body: item.pessoa.map((pessoa: any) => [
+          pessoa.id,
+          pessoa.name,
+          pessoa.email,
+        ]),
+      });
+
+      startY = (doc as any).lastAutoTable.finalY + 10;
+      autoTable(doc, {
+        startY,
+        head: [['ID', 'Rua', 'Número']],
+        body: item.endereco.map((endereco: any) => [
+          endereco.id,
+          endereco.rua,
+          endereco.numero,
+        ]),
+      });
+
+      startY = (doc as any).lastAutoTable.finalY + 10;
+      autoTable(doc, {
+        startY,
+        head: [['ID', 'Cargo', 'Salário']],
+        body: item.vinculos.map((vinculo: any) => [
+          vinculo.id,
+          vinculo.cargo,
+          vinculo.salario,
+        ]),
+      });
+
+      startY = (doc as any).lastAutoTable.finalY + 20;
     });
 
-    const pageCount = doc.getNumberOfPages();
-    for (let i = 1; i <= pageCount; i++) {
+    const contadorDePaginas = doc.getNumberOfPages();
+    for (let i = 1; i <= contadorDePaginas; i++) {
       doc.setPage(i);
       doc.setFontSize(10);
       doc.text(textoRodape, 10, doc.internal.pageSize.height - 10);
       doc.text(
-        `Página ${i} de ${pageCount}`,
+        `Página ${i} de ${contadorDePaginas}`,
         doc.internal.pageSize.width - 50,
         doc.internal.pageSize.height - 10
       );

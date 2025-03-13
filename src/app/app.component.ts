@@ -12,25 +12,40 @@ import { Component } from '@angular/core';
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  data = [
-    { id: 1, name: 'João Silva', email: 'joao@example.com' },
-    { id: 2, name: 'Maria Oliveira', email: 'maria@example.com' },
-    { id: 3, name: 'Pedro Souza', email: 'pedro@example.com' },
+  public dadosPessoa = [
+    {
+      pessoa: [
+        { id: 1, name: 'João Silva', email: 'joao@example.com' },
+        { id: 2, name: 'Maria Oliveira', email: 'maria@example.com' },
+        { id: 3, name: 'Pedro Souza', email: 'pedro@example.com' },
+      ],
+      endereco: [
+        { id: 1, rua: 'rua vinsconde', numero: '23' },
+        { id: 2, rua: 'Maria Oliveira', numero: '43' },
+        { id: 3, rua: 'Pedro Souza', numero: '54' },
+      ],
+      vinculos: [
+        { id: 1, cargo: 'Barman', salario: '1.8989' },
+        { id: 2, cargo: 'Pintor', salario: '5.965' },
+        { id: 3, cargo: 'Jogador', salario: '79.874' },
+      ],
+    },
   ];
 
-  headerText = 'Relatório de Usuários';
-  footerText = 'Gerado por Angular PDF Generator';
-  logoUrl =
+  public textoCabecalho = 'Relatório de Usuários';
+  public textoRodape = 'Gerado por Angular PDF Generator';
+  public logoUrl =
     'https://images.freeimages.com/image/thumbs/a6e/dark-wolf-logo-triangle-png-art-5695593.png';
 
   constructor(private pdfService: PdfService) {}
 
-  generatePdf() {
-    this.pdfService.generatePdf(
-      this.data,
-      this.headerText,
-      this.footerText,
+  public gerarPdf() {
+    this.pdfService.gerarPdf(
+      this.dadosPessoa,
+      this.textoCabecalho,
+      this.textoRodape,
       this.logoUrl
     );
   }
 }
+
