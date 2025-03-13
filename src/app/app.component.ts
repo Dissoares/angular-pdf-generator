@@ -15,9 +15,9 @@ export class AppComponent {
   public dadosPessoa = [
     {
       pessoa: [
-        { id: 1, name: 'João Silva', email: 'joao@example.com' },
-        { id: 2, name: 'Maria Oliveira', email: 'maria@example.com' },
-        { id: 3, name: 'Pedro Souza', email: 'pedro@example.com' },
+        { id: 1, name: 'João Silva', email: 'joao@example.com', idade: 30 },
+        { id: 2, name: 'Maria Oliveira', email: 'maria@example.com', idade: 40 },
+        { id: 3, name: 'Pedro Souza', email: 'pedro@example.com', idade: 44 },
       ],
       endereco: [
         { id: 1, rua: 'rua vinsconde', numero: '23' },

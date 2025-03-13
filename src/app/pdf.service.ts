@@ -1,9 +1,11 @@
+import autoTable, { CellInput } from 'jspdf-autotable';
 import { Injectable } from '@angular/core';
-import autoTable from 'jspdf-autotable';
 import { jsPDF } from 'jspdf';
+
 @Injectable({
   providedIn: 'root',
 })
+
 export class PdfService {
   constructor() {}
 
@@ -22,39 +24,27 @@ export class PdfService {
     let startY = 40;
 
     dadosArray.forEach((item) => {
-      autoTable(doc, {
-        startY,
-        head: [['ID', 'Nome', 'Email']],
-        body: item.pessoa.map((pessoa: any) => [
-          pessoa.id,
-          pessoa.name,
-          pessoa.email,
-        ]),
-      });
+      Object.keys(item).forEach((chave) => {
+        const dadosTabela = item[chave];
 
-      startY = (doc as any).lastAutoTable.finalY + 10;
-      autoTable(doc, {
-        startY,
-        head: [['ID', 'Rua', 'Número']],
-        body: item.endereco.map((endereco: any) => [
-          endereco.id,
-          endereco.rua,
-          endereco.numero,
-        ]),
-      });
+        if (Array.isArray(dadosTabela) && dadosTabela.length > 0) {
+          const cabecalho = Object.keys(dadosTabela[0]).map(
+            (key) => key.charAt(0).toUpperCase() + key.slice(1)
+          );
 
-      startY = (doc as any).lastAutoTable.finalY + 10;
-      autoTable(doc, {
-        startY,
-        head: [['ID', 'Cargo', 'Salário']],
-        body: item.vinculos.map((vinculo: any) => [
-          vinculo.id,
-          vinculo.cargo,
-          vinculo.salario,
-        ]),
-      });
+          const corpoTabela: CellInput[][] = dadosTabela.map(
+            (obj) => Object.values(obj) as CellInput[] 
+          );
 
-      startY = (doc as any).lastAutoTable.finalY + 20;
+          autoTable(doc, {
+            startY,
+            head: [cabecalho],
+            body: corpoTabela,
+          });
+
+          startY = (doc as any).lastAutoTable.finalY + 10;
+        }
+      });
     });
 
     const contadorDePaginas = doc.getNumberOfPages();
